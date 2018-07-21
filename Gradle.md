@@ -5,6 +5,7 @@
 - 2018年7月17日 构建基础（任务依赖，任务操纵，方法抽取等）
 - 2018年7月18日 调用Ant任务，默认任务,java项目多项目构建，工程依赖等
 - 2018年7月19日 依赖管理，命令行
+- 2018年7月21日 构建脚本，一些杂项
 
 ## 笔记
 ### 构建基础
@@ -166,9 +167,46 @@ ext{ //额外变量用ext声明，在project、task、source set中都可以访�
 ```
 
 ### 一些杂项
+- mkdir 创建目录
+- `apply from:'other.gradle'` 引用其他脚本
 
 
+### 任务进阶
 
+- 定义任务的其他方式
+```
+task(hello)<<{  //或者 task('hello'<<)
+    println "hello"
+}
 
+task(copy,type:Copy){ //或者 task('copy',type:Copy)
+    from(file('srcDir'))
+    into(buildDir)
+}
 
+//使用create方法定义任务
+tasks.create(name:'hello')<<{
+    println "Hello"
+}
+tasks.create(name:'copy',type:Copy){ //复制任务，配置来源和目标位置
+    from(file('srcDir'))
+    into(buildDir)
+}
+```
+
+```
+//使用闭包配置任务，可读性强
+task myCopy(type:Copy)
+myCopy{
+    from 'resources'
+    into 'target'
+    include('**/*.txt','**/*.xml','**/*.properties')
+}
+```
+
+- 任务排序,`taskA.mustRunAfter taskB` A必须在B之后运行； `taskA.shouldRunAfter taskB` A应该在B之后运行
+- 替换任务，`task copy(overwrite:true)`将之前的copy task覆盖，重写
+- `task.enabled=false/true` 禁用/启用任务
+---
+*后续教程关于各个语言的插件较多，新项目刚刚开始，Gradle部分的学习先告一段路，以后再补，了解了以上这些单纯对andorid项目中的构建帮助还是很大的，之前对build.gradle文件的操作总是小心翼翼的，现在可以大胆些了(2018年7月21日23:40:25)*
  <meta http-equiv="refresh" content="1">
