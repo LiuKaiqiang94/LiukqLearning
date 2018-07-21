@@ -129,5 +129,46 @@ task dist(dependsOn: [compile, test]) << {
 - -b 指定构建位置，-p 指定构建目录  `description='ssss'`添加描述信息
 - `gradle -q tasks` 任务列表 追加--all 查看更多
 - `gradle dependencies` 依赖列表
+- `gradle -q projects` 项目列表
+
+### gradle图形界面
+- 启动图形用户界面：`gradle -gui`
+
+### 编写构建脚本
+- 基于Groovy
+- 每个项目Gradle创建project类型的实例，如果调用脚本中的方法和属性在脚本中未定义，将会委托给Project对象
+- project属性：
+
+名称|类型|默认值
+-|-|-
+`project`|`Project`|`Project`实例
+`name`|`String`|项目目录名称
+`path`|`String`|项目绝对路径
+`description`|`Strng`|项目描述
+`projectDir`|`File`|包含生成脚本的目录
+`buildDir`|`File`|`projectDir/build`
+`group`|`Object`|未指定
+`version`|`Object`|未指定
+`ant`|`AntBuilder`|`AntBuilder`实例
+
+- Srcipt API
+- 声明局部变量和额外变量
+```
+def dest="dest" //局部变量用def声明
+task copy(type:Copy){
+    from "source"
+    into dest
+}
+
+ext{ //额外变量用ext声明，在project、task、source set中都可以访问，相当于config.build中的配置
+    springVersion="3.1.0"
+}
+```
+
+### 一些杂项
+
+
+
+
 
  <meta http-equiv="refresh" content="1">
