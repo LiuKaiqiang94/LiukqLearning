@@ -49,6 +49,37 @@
 - RxGalleryFinal，这个库是将之前的GalleryFinal改进成了响应式框架，迁移到RxGalleryFinal上的。因为之前项目中使用过GalleryFinal，由于存在各种问题（主要是7.0适配问题），无法解决，就改用自己实现的工具类。尝试了下新的Rx库，在配置上出了些问题，而它的7.0崩溃问题还在Q&A中，最终还是没有采用。
 - TakePhoto，这个库是github上star最多的，主要的配置参数都可以自定义，但是在8.0以上系统使用时出现了UndeclaredThrowableException异常，没有找到有效解决方案，最终没有采用。
 
+### greendao
+GreenDao在查询时不仅可以实现单表查询，还可以实现多表查询，需要使用`@ToOne`和`@ToMany`注解声明关联关系。
+```
+    @Entity //运动表
+    public class SportInfo {
+        @Id
+        private Long sportId;
+        //日期
+        private String date = "";
+        private Long UserId;
+        @ToOne(joinProperty = "UserId")
+        private UserInfo userInfo;//关系表
+    }
+```
+
+```
+@Entity //用户表
+public class UserInfo {
+    @Id
+    private Long id;
+    //账号
+    private String number;
+    //密码
+    private String password;
+    //昵称
+    private String nick_name;
+    //一对多关联
+    @ToMany(referencedJoinProperty = "sportId")
+    private List<SportInfo> sportInfo;
+}
+```
 [1]: https://upload-images.jianshu.io/upload_images/912181-6edf7955de7d48fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/405
 [2]: https://upload-images.jianshu.io/upload_images/912181-a3379095b4bc6095.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/283
 <meta http-equiv="refresh" content="1">
