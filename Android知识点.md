@@ -80,6 +80,14 @@ public class UserInfo {
     private List<SportInfo> sportInfo;
 }
 ```
+
+### 不同module或library直接的冲突问题
+  遇到app和commonLib同时依赖alipay的jar包，在编译时报错，在打包时同样会报错，提示一个文件找不到，解决方法是：
+  在其中一个lib中将implementation改为complieOnly关键字，作用是只在本模块中依赖，不影响其他模块的依赖。
+
+### RecyclerView的item动画
+  recyclerView本身带有项的进入、移除、变化的动画，是由RecyclerView.ItemAnimator实现的。继承该接口之后自定义一些方法就可以实现各种动画。adapter的调用方式为`notifyItemRangeInserted（int a,int b）,notifyItemInserted(int position),这两个方法分别为将item添加到一个范围或一个位置，其他有相关的remove change方法等。
+
 [1]: https://upload-images.jianshu.io/upload_images/912181-6edf7955de7d48fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/405
 [2]: https://upload-images.jianshu.io/upload_images/912181-a3379095b4bc6095.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/283
 <meta http-equiv="refresh" content="1">
